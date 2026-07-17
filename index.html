@@ -298,7 +298,7 @@ footer .small{font-size:.8rem;opacity:.7;margin-top:16px}
       <div class="col next">
         <h3><span class="dot"></span>Next — Ready to Ship</h3>
         <div class="card"><b>v7.0 — AI-first operations, end to end</b>The playbook is proven: problem discovery → automation → AI force multiplication. Looking for the right team to scale it with.</div>
-        <div class="card hire-cta">📬 Building something that needs this? <a href="mailto:mailbox.gupta@gmail.com">Let's talk.</a></div>
+        <div class="card hire-cta">📬 Building something that needs this? <a href="mailto:mailbox.gupta@gmail.com?subject=Hello%20Gaurav%20—%20saw%20your%20roadmap" onclick="copyEmail(this)">Let's talk.</a><span class="copied" style="display:none;color:var(--green);font-size:.8rem"> ✓ email copied</span></div>
       </div>
       <div class="col later">
         <h3><span class="dot"></span>Later — Vision</h3>
@@ -363,6 +363,11 @@ footer .small{font-size:.8rem;opacity:.7;margin-top:16px}
 </footer>
 
 <script>
+function copyEmail(el){
+  try{navigator.clipboard.writeText('mailbox.gupta@gmail.com');}catch(e){}
+  var s=el.parentNode.querySelector('.copied');
+  if(s){s.style.display='inline';setTimeout(function(){s.style.display='none';},2500);}
+}
 // scroll reveal
 document.body.classList.add('js');
 document.querySelectorAll('.release,.col,.log-entry,.cap-group,.post').forEach(el=>el.classList.add('reveal'));
