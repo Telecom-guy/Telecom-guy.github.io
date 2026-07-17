@@ -25,6 +25,10 @@ header{background:linear-gradient(180deg,#f5f8fb 0%,#ffffff 100%);border-bottom:
 h1{font-size:2.6rem;color:var(--accent);letter-spacing:.5px}
 .title{font-size:1.15rem;font-weight:600;margin-top:6px}
 .tagline{font-size:1.35rem;color:var(--gray);font-weight:300;margin-top:14px;font-style:italic}
+.hero-top{display:flex;align-items:center;justify-content:center;gap:28px;text-align:left}
+.hero-id .tagline{margin-top:8px}
+.headshot{width:118px;height:118px;border-radius:50%;border:3.5px solid var(--accent);box-shadow:0 6px 18px rgba(31,78,121,.22);background:#fff;flex-shrink:0}
+@media(max-width:640px){.hero-top{flex-direction:column;text-align:center;gap:12px}}
 .contact-row{margin-top:20px;font-size:.95rem;color:var(--gray)}
 .contact-row a{text-decoration:none;font-weight:600}
 .tags{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
@@ -134,10 +138,14 @@ footer .small{font-size:.8rem;opacity:.7;margin-top:16px}
 
 <header>
   <div class="wrap">
-    <img src="headshot.png" alt="Gaurav Gupta" style="width:132px;height:132px;border-radius:50%;border:3.5px solid var(--accent);box-shadow:0 6px 18px rgba(31,78,121,.22);margin-bottom:14px;background:#fff">
-    <h1>GAURAV GUPTA</h1>
-    <div class="title">Principal Engineer (Forward Deployed) — Network Automation &amp; AI Leadership</div>
-    <div class="tagline">"13 years in production. Now shipping AI."</div>
+    <div class="hero-top">
+      <img src="headshot.png" alt="Gaurav Gupta" class="headshot">
+      <div class="hero-id">
+        <h1>GAURAV GUPTA</h1>
+        <div class="title">Principal Engineer (Forward Deployed) — Network Automation &amp; AI Leadership</div>
+        <div class="tagline">"13 years in production. Now shipping AI."</div>
+      </div>
+    </div>
     <div class="contact-row">
       Dallas–Fort Worth, TX &nbsp;|&nbsp; <a href="tel:+19722073888">972-207-3888</a> &nbsp;|&nbsp;
       <a href="mailto:mailbox.gupta@gmail.com">mailbox.gupta@gmail.com</a> &nbsp;|&nbsp;
