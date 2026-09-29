@@ -38,6 +38,20 @@ h1{font-size:2.6rem;color:var(--accent);letter-spacing:.5px}
 .btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(31,78,121,.25)}
 .btn-primary{background:var(--accent);color:#fff}
 .btn-outline{background:#fff;color:var(--accent);border:1.5px solid var(--accent)}
+/* header + game sidebar */
+header .wrap.header-flex{max-width:1100px;display:flex;gap:36px;align-items:flex-start}
+.hero-main{flex:1;min-width:0}
+.game-side{flex-shrink:0;width:240px;background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;box-shadow:0 4px 14px rgba(31,78,121,.08);text-align:center}
+.game-side-head{font-weight:700;color:var(--accent);font-size:.92rem;margin-bottom:8px}
+.game-hud{display:flex;justify-content:center;gap:14px;font-weight:700;color:var(--accent);font-size:.8rem;margin-bottom:8px}
+#sc-canvas{background:linear-gradient(180deg,var(--accent-bg),#fff);border:2px solid var(--accent);border-radius:10px;display:block;touch-action:none;max-width:100%;cursor:pointer}
+.game-overlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,.72);border-radius:10px}
+.game-overlay-card{background:rgba(255,255,255,.98);border:2px solid var(--accent);border-radius:12px;padding:14px 16px;box-shadow:0 10px 24px rgba(0,0,0,.15);max-width:190px}
+.game-overlay-card b{color:var(--accent);font-size:.92rem;display:block}
+.game-overlay-card div{margin-top:4px;color:var(--gray);font-size:.76rem}
+.game-overlay-card button{margin-top:10px;padding:7px 16px;font-size:.82rem}
+.game-hint{font-size:.7rem;color:var(--light-gray);margin-top:8px}
+@media(max-width:900px){header .wrap.header-flex{flex-direction:column;align-items:center}.game-side{width:100%;max-width:280px}}
 /* ribbon */
 .ribbon-wrap{max-width:920px;margin:24px auto 0;padding:0 10px}
 .ribbon-wrap svg{width:100%;height:auto;display:block}
@@ -137,7 +151,8 @@ footer .small{font-size:.8rem;opacity:.7;margin-top:16px}
 <body oncontextmenu="return false">
 
 <header>
-  <div class="wrap">
+  <div class="wrap header-flex">
+    <div class="hero-main">
     <div class="hero-top">
       <img src="headshot.png" alt="Gaurav Gupta" class="headshot">
       <div class="hero-id">
@@ -203,6 +218,22 @@ footer .small{font-size:.8rem;opacity:.7;margin-top:16px}
       <a class="btn btn-primary" href="mailto:mailbox.gupta@gmail.com?subject=Hello%20Gaurav%20—%20saw%20your%20roadmap">✉ Contact Me</a>
       <a class="btn btn-outline" href="https://www.linkedin.com/in/gaurav-gupta-pmp%C2%AE-16645654/" target="_blank" rel="noopener">Connect on LinkedIn</a>
     </div>
+    </div>
+    <aside class="game-side" id="game">
+      <div class="game-side-head">🎮 Side Quest — Signal Chase</div>
+      <div class="game-hud"><span>Score: <span id="sc-score">0</span></span><span>Lives: <span id="sc-lives">❤️❤️❤️</span></span></div>
+      <div style="position:relative">
+        <canvas id="sc-canvas" width="220" height="300"></canvas>
+        <div id="sc-overlay" class="game-overlay">
+          <div class="game-overlay-card">
+            <b id="sc-overlay-title"></b>
+            <div id="sc-overlay-msg"></div>
+            <button id="sc-restart" class="btn btn-primary">Play Again</button>
+          </div>
+        </div>
+      </div>
+      <p class="game-hint">Catch 📶, dodge ⚡📵 — mouse or arrow keys.</p>
+    </aside>
   </div>
 </header>
 
@@ -375,7 +406,7 @@ footer .small{font-size:.8rem;opacity:.7;margin-top:16px}
     <div class="cta-row" style="margin-top:20px">
       <a class="btn btn-outline" style="background:transparent;color:#fff;border-color:#fff" href="mailto:mailbox.gupta@gmail.com?subject=Hello%20Gaurav%20—%20saw%20your%20roadmap">✉ Contact Me</a>
     </div>
-    <div class="small">© 2026 Gaurav Gupta · Dallas–Fort Worth, TX · <a href="#blog" style="opacity:.85">📓 Blog</a></div>
+    <div class="small">© 2026 Gaurav Gupta · Dallas–Fort Worth, TX · <a href="#game" style="opacity:.85">🎮 Game</a> · <a href="#blog" style="opacity:.85">📓 Blog</a></div>
   </div>
 </footer>
 
@@ -391,6 +422,100 @@ document.querySelectorAll('.release,.col,.log-entry,.cap-group,.post').forEach(e
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}}),{threshold:.08});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
+</script>
+<script>
+(function(){
+  const cv=document.getElementById('sc-canvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const W=cv.width,H=cv.height;
+  let paddle={x:W/2-40,w:80,h:14,y:H-30};
+  let items=[],score=0,lives=3,spawnT=0,running=false,speedMul=1;
+  const scoreEl=document.getElementById('sc-score'),livesEl=document.getElementById('sc-lives');
+  const overlay=document.getElementById('sc-overlay'),ot=document.getElementById('sc-overlay-title'),om=document.getElementById('sc-overlay-msg');
+  const ACCENT='#1F4E79';
+
+  function spawn(){
+    const r=Math.random();
+    let type='good',ch='📶';
+    if(r<0.22){type='bad';ch='⚡';}
+    else if(r<0.38){type='bad';ch='📵';}
+    items.push({x:Math.random()*(W-30)+15,y:-20,ch,type,speed:2+Math.random()*2*speedMul});
+  }
+  function drawPaddle(){
+    ctx.fillStyle=ACCENT;
+    ctx.beginPath();
+    if(ctx.roundRect)ctx.roundRect(paddle.x,paddle.y,paddle.w,paddle.h,7);
+    else ctx.rect(paddle.x,paddle.y,paddle.w,paddle.h);
+    ctx.fill();
+    ctx.font='20px sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('📡',paddle.x+paddle.w/2,paddle.y-6);
+  }
+  function loop(){
+    if(!running)return;
+    ctx.clearRect(0,0,W,H);
+    spawnT++;
+    if(spawnT>Math.max(18,42-score/2)){spawnT=0;spawn();}
+    ctx.font='26px sans-serif';
+    ctx.textAlign='center';
+    for(let i=items.length-1;i>=0;i--){
+      const it=items[i];
+      it.y+=it.speed;
+      ctx.fillText(it.ch,it.x,it.y);
+      if(it.y>paddle.y-6 && it.y<paddle.y+18 && it.x>paddle.x-10 && it.x<paddle.x+paddle.w+10){
+        if(it.type==='good'){score+=10;scoreEl.textContent=score;speedMul=1+score/150;}
+        else{loseLife();}
+        items.splice(i,1);
+        continue;
+      }
+      if(it.y>H+20)items.splice(i,1);
+    }
+    drawPaddle();
+    requestAnimationFrame(loop);
+  }
+  function loseLife(){
+    lives--;
+    livesEl.textContent='❤️'.repeat(Math.max(lives,0))+'🖤'.repeat(3-Math.max(lives,0));
+    if(lives<=0)endGame();
+  }
+  function endGame(){
+    running=false;
+    ot.textContent='📵 Signal Lost';
+    om.textContent='Final score: '+score;
+    document.getElementById('sc-restart').textContent='Play Again';
+    overlay.style.display='flex';
+  }
+  function restart(){
+    items=[];score=0;lives=3;spawnT=0;speedMul=1;running=true;
+    scoreEl.textContent=0;livesEl.textContent='❤️❤️❤️';
+    overlay.style.display='none';
+    requestAnimationFrame(loop);
+  }
+  cv.addEventListener('click',()=>{if(!running)restart();});
+  cv.addEventListener('mousemove',e=>{
+    const rect=cv.getBoundingClientRect();
+    const x=(e.clientX-rect.left)*(W/rect.width);
+    paddle.x=Math.min(Math.max(x-paddle.w/2,0),W-paddle.w);
+  });
+  cv.addEventListener('touchmove',e=>{
+    e.preventDefault();
+    const rect=cv.getBoundingClientRect();
+    const x=(e.touches[0].clientX-rect.left)*(W/rect.width);
+    paddle.x=Math.min(Math.max(x-paddle.w/2,0),W-paddle.w);
+  },{passive:false});
+  document.addEventListener('keydown',e=>{
+    if(!running)return;
+    if(e.key==='ArrowLeft')paddle.x=Math.max(paddle.x-24,0);
+    if(e.key==='ArrowRight')paddle.x=Math.min(paddle.x+24,W-paddle.w);
+  });
+  document.getElementById('sc-restart').addEventListener('click',e=>{e.stopPropagation();restart();});
+  ot.textContent='📶 Signal Chase';
+  om.textContent='Catch the signal, dodge the interference.';
+  document.getElementById('sc-restart').textContent='▶ Play';
+  overlay.style.display='flex';
+  drawPaddle();
+})();
 </script>
 <script data-goatcounter="https://telecom-guy.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
