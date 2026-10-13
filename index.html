@@ -131,6 +131,11 @@ h1{font-size:clamp(2.4rem,5.4vw,4rem);font-weight:800;letter-spacing:-.035em;lin
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow)}
 .stat-num{font-size:2.1rem;font-weight:800;letter-spacing:-.03em;line-height:1}
 .stat-label{color:var(--muted);font-size:.84rem;margin-top:8px;font-weight:500}
+a.stat,body.js a.stat.reveal{display:block;color:inherit;cursor:pointer;transition:opacity .6s,transform .25s,box-shadow .25s,border-color .25s}
+body a.stat.stat:hover,body a.stat.stat:focus-visible,body.js a.stat.reveal.visible:hover,body.js a.stat.reveal.visible:focus-visible{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--accent)}
+.stat-go{display:inline-block;margin-left:6px;color:var(--accent);opacity:0;transform:translateX(-4px);transition:opacity .25s,transform .25s}
+a.stat:hover .stat-go,a.stat:focus-visible .stat-go{opacity:1;transform:none}
+@media(hover:none){.stat-go{opacity:.7;transform:none}}
 
 /* sections */
 section{padding:88px 0}
@@ -386,10 +391,10 @@ body.js .reveal.visible{opacity:1;transform:none}
     </div>
 
     <div class="stats">
-      <div class="stat reveal"><div class="stat-num grad-text" data-count="15" data-suffix="+">15+</div><div class="stat-label">Years in wireless telecom</div></div>
-      <div class="stat reveal"><div class="stat-num grad-text" data-count="12">12</div><div class="stat-label">Production automation tools</div></div>
-      <div class="stat reveal"><div class="stat-num grad-text" data-count="75">75</div><div class="stat-label">Custom AI skills &amp; agents</div></div>
-      <div class="stat reveal"><div class="stat-num grad-text" data-count="1860" data-prefix="~">~1,860</div><div class="stat-label">Engineering hours saved / year</div></div>
+      <a class="stat reveal" href="#releases" title="See release history"><div class="stat-num grad-text" data-count="15" data-suffix="+">15+</div><div class="stat-label">Years in wireless telecom<span class="stat-go">→</span></div></a>
+      <a class="stat reveal" href="#projects" title="See projects"><div class="stat-num grad-text" data-count="12">12</div><div class="stat-label">Production automation tools<span class="stat-go">→</span></div></a>
+      <a class="stat reveal" href="#capabilities" title="See AI capabilities"><div class="stat-num grad-text" data-count="75">75</div><div class="stat-label">Custom AI skills &amp; agents<span class="stat-go">→</span></div></a>
+      <a class="stat reveal" href="#roadmap" title="See impact on the roadmap"><div class="stat-num grad-text" data-count="1860" data-prefix="~">~1,860</div><div class="stat-label">Engineering hours saved / year<span class="stat-go">→</span></div></a>
     </div>
 
     <div class="journey reveal" aria-hidden="true">
