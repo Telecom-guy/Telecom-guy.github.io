@@ -151,7 +151,15 @@ h2{font-size:clamp(1.8rem,3.4vw,2.5rem);font-weight:800;letter-spacing:-.03em;ma
 .j-label{fill:var(--ink);font-weight:700;font-family:Inter,sans-serif}
 .j-sub{fill:var(--muted);font-family:Inter,sans-serif}
 .j-node{fill:var(--surface);stroke:var(--accent)}
-.j-track{stroke:var(--accent-soft)}
+.journey-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.j-ticker{font-family:'JetBrains Mono',Consolas,Menlo,monospace;font-size:.78rem;font-weight:700;color:#16a34a;background:rgba(22,163,74,.1);border:1px solid rgba(22,163,74,.25);border-radius:999px;padding:3px 10px;text-transform:none;letter-spacing:0}
+[data-theme="dark"] .j-ticker{color:#4ade80;background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.3)}
+.j-grid line{stroke:var(--line);stroke-dasharray:3 6}
+.j-line{stroke-dasharray:1;stroke-dashoffset:0;transition:stroke-dashoffset 2.2s cubic-bezier(.4,0,.2,1)}
+.j-area,.j-flow{transition:opacity 1s ease 1.4s}
+body.js .journey:not(.visible) .j-line{stroke-dashoffset:1}
+body.js .journey:not(.visible) .j-area,body.js .journey:not(.visible) .j-flow{opacity:0}
+@media(max-width:700px){.j-label{font-size:16px}.j-sub{font-size:13px}}
 
 /* bento principles */
 .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
@@ -383,47 +391,52 @@ body.js .reveal.visible{opacity:1;transform:none}
     </div>
 
     <div class="journey reveal" aria-hidden="true">
-      <div class="journey-title">Skill journey</div>
-      <svg viewBox="0 0 900 185" xmlns="http://www.w3.org/2000/svg">
+      <div class="journey-title"><span>Skill journey</span><span class="j-ticker">GG ▲ +1,860 hrs/yr</span></div>
+      <svg viewBox="0 0 900 272" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="rg" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0" stop-color="#2563eb"/><stop offset=".5" stop-color="#06b6d4"/><stop offset="1" stop-color="#8b5cf6"/>
           </linearGradient>
+          <linearGradient id="ra" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#06b6d4" stop-opacity=".28"/><stop offset="1" stop-color="#06b6d4" stop-opacity="0"/>
+          </linearGradient>
         </defs>
-        <path class="j-track" d="M40,110 C86,110 131,65 177,65 C223,65 267,110 313,110 C359,110 404,65 450,65 C496,65 541,110 587,110 C633,110 677,65 723,65 C769,65 814,110 860,110" fill="none" stroke-width="16" stroke-linecap="round"/>
-        <path d="M40,110 C86,110 131,65 177,65 C223,65 267,110 313,110 C359,110 404,65 450,65 C496,65 541,110 587,110 C633,110 677,65 723,65 C769,65 814,110 860,110" fill="none" stroke="url(#rg)" stroke-width="5" stroke-linecap="round" class="dashflow"/>
-        <g class="bob" style="animation-delay:0s"><text x="40" y="88" font-size="19" text-anchor="middle">🚗</text><text x="40" y="70" font-size="16" text-anchor="middle">🗼</text></g>
-        <circle class="j-node" cx="40" cy="110" r="10" stroke-width="3"/>
-        <text class="j-label" x="40" y="143" font-size="13" text-anchor="middle">Field &amp; RF</text>
-        <text class="j-sub" x="40" y="159" font-size="11" text-anchor="middle">Test Equipment</text>
-        <g class="bob" style="animation-delay:.4s"><text x="177" y="39" font-size="22" text-anchor="middle">📶</text></g>
-        <circle class="j-node" cx="177" cy="65" r="10" stroke-width="3"/>
-        <text class="j-label" x="177" y="98" font-size="13" text-anchor="middle">RF System</text>
-        <text class="j-sub" x="177" y="114" font-size="11.5" text-anchor="middle">Performance</text>
-        <g class="bob" style="animation-delay:.8s"><text x="313" y="84" font-size="22" text-anchor="middle">🗄️</text></g>
-        <circle class="j-node" cx="313" cy="110" r="10" stroke-width="3"/>
-        <text class="j-label" x="313" y="143" font-size="13" text-anchor="middle">Data</text>
-        <text class="j-sub" x="313" y="159" font-size="11.5" text-anchor="middle">Engineering</text>
-        <g class="bob" style="animation-delay:1.2s"><text x="450" y="39" font-size="21" text-anchor="middle">🏗️</text></g>
-        <circle class="j-node" cx="450" cy="65" r="10" stroke-width="3"/>
-        <text class="j-label" x="450" y="98" font-size="13" text-anchor="middle">System</text>
-        <text class="j-sub" x="450" y="114" font-size="11.5" text-anchor="middle">Architecture</text>
-        <g class="bob" style="animation-delay:1.6s"><text x="587" y="84" font-size="21" text-anchor="middle">📐</text></g>
-        <circle class="j-node" cx="587" cy="110" r="10" stroke-width="3"/>
+        <g class="j-grid"><line x1="10" y1="60" x2="890" y2="60"/><line x1="10" y1="120" x2="890" y2="120"/><line x1="10" y1="180" x2="890" y2="180"/><line x1="10" y1="240" x2="890" y2="240"/></g>
+        <path class="j-area" d="M40,215 L70,227 L105,200 L135,206 L177,190 L207,202 L242,175 L272,181 L313,165 L343,177 L378,147 L408,154 L450,135 L480,147 L515,120 L545,126 L587,110 L617,122 L652,92 L682,99 L723,80 L753,92 L788,61 L818,69 L860,48 L860,262 L40,262 Z" fill="url(#ra)"/>
+        <path class="j-line" pathLength="1" d="M40,215 L70,227 L105,200 L135,206 L177,190 L207,202 L242,175 L272,181 L313,165 L343,177 L378,147 L408,154 L450,135 L480,147 L515,120 L545,126 L587,110 L617,122 L652,92 L682,99 L723,80 L753,92 L788,61 L818,69 L860,48" fill="none" stroke="url(#rg)" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+        <path class="dashflow j-flow" d="M40,215 L70,227 L105,200 L135,206 L177,190 L207,202 L242,175 L272,181 L313,165 L343,177 L378,147 L408,154 L450,135 L480,147 L515,120 L545,126 L587,110 L617,122 L652,92 L682,99 L723,80 L753,92 L788,61 L818,69 L860,48" fill="none" stroke="#fff" stroke-opacity=".7" stroke-width="2" stroke-linecap="round"/>
+        <g class="bob" style="animation-delay:0s"><text x="40" y="193" font-size="19" text-anchor="middle">🚗</text><text x="40" y="175" font-size="16" text-anchor="middle">🗼</text></g>
+        <circle class="j-node" cx="40" cy="215" r="9" stroke-width="3"/>
+        <text class="j-label" x="52" y="248" font-size="13" text-anchor="middle">Field &amp; RF</text>
+        <text class="j-sub" x="54" y="264" font-size="11.5" text-anchor="middle">Test Equipment</text>
+        <g class="bob" style="animation-delay:.4s"><text x="177" y="168" font-size="21" text-anchor="middle">📶</text></g>
+        <circle class="j-node" cx="177" cy="190" r="9" stroke-width="3"/>
+        <text class="j-label" x="177" y="223" font-size="13" text-anchor="middle">RF System</text>
+        <text class="j-sub" x="177" y="239" font-size="11.5" text-anchor="middle">Performance</text>
+        <g class="bob" style="animation-delay:.8s"><text x="313" y="143" font-size="21" text-anchor="middle">🗄️</text></g>
+        <circle class="j-node" cx="313" cy="165" r="9" stroke-width="3"/>
+        <text class="j-label" x="313" y="198" font-size="13" text-anchor="middle">Data</text>
+        <text class="j-sub" x="313" y="214" font-size="11.5" text-anchor="middle">Engineering</text>
+        <g class="bob" style="animation-delay:1.2s"><text x="450" y="113" font-size="21" text-anchor="middle">🏗️</text></g>
+        <circle class="j-node" cx="450" cy="135" r="9" stroke-width="3"/>
+        <text class="j-label" x="450" y="168" font-size="13" text-anchor="middle">System</text>
+        <text class="j-sub" x="450" y="184" font-size="11.5" text-anchor="middle">Architecture</text>
+        <g class="bob" style="animation-delay:1.6s"><text x="587" y="88" font-size="21" text-anchor="middle">📐</text></g>
+        <circle class="j-node" cx="587" cy="110" r="9" stroke-width="3"/>
         <text class="j-label" x="587" y="143" font-size="13" text-anchor="middle">Solution</text>
         <text class="j-sub" x="587" y="159" font-size="11.5" text-anchor="middle">Architecture</text>
-        <g class="bob" style="animation-delay:2s"><text x="723" y="39" font-size="22" text-anchor="middle">⚙️</text></g>
-        <circle class="j-node" cx="723" cy="65" r="10" stroke-width="3"/>
-        <text class="j-label" x="723" y="98" font-size="13" text-anchor="middle">Automation</text>
-        <text class="j-sub" x="723" y="114" font-size="11.5" text-anchor="middle">At Scale</text>
-        <circle cx="860" cy="110" r="14" fill="none" stroke="#8b5cf6" stroke-width="2" opacity=".5">
+        <g class="bob" style="animation-delay:2s"><text x="723" y="58" font-size="21" text-anchor="middle">⚙️</text></g>
+        <circle class="j-node" cx="723" cy="80" r="9" stroke-width="3"/>
+        <text class="j-label" x="723" y="113" font-size="13" text-anchor="middle">Automation</text>
+        <text class="j-sub" x="723" y="129" font-size="11.5" text-anchor="middle">At Scale</text>
+        <circle cx="860" cy="48" r="14" fill="none" stroke="#8b5cf6" stroke-width="2" opacity=".5">
           <animate attributeName="r" values="12;24;12" dur="2.2s" repeatCount="indefinite"/>
           <animate attributeName="opacity" values=".55;0;.55" dur="2.2s" repeatCount="indefinite"/>
         </circle>
-        <g class="bob" style="animation-delay:2.4s"><text x="860" y="84" font-size="23" text-anchor="middle">🤖</text></g>
-        <circle cx="860" cy="110" r="12" fill="#8b5cf6" stroke="#8b5cf6" stroke-width="3"/>
-        <text class="j-label" x="860" y="143" font-size="14" text-anchor="middle">AI</text>
-        <text class="j-sub" x="860" y="159" font-size="11.5" text-anchor="middle">🎯 North Star</text>
+        <g class="bob" style="animation-delay:2.4s"><text x="860" y="24" font-size="23" text-anchor="middle">🤖</text></g>
+        <circle cx="860" cy="48" r="11" fill="#8b5cf6" stroke="#8b5cf6" stroke-width="3"/>
+        <text class="j-label" x="860" y="81" font-size="14" text-anchor="middle">AI</text>
+        <text class="j-sub" x="860" y="97" font-size="11.5" text-anchor="middle">🎯 North Star</text>
       </svg>
     </div>
   </div>
@@ -500,7 +513,7 @@ body.js .reveal.visible{opacity:1;transform:none}
         <button class="rung" data-l="1" role="tab"><span class="lv">L1</span><span class="nm">Assisted<br>(open loop)</span><span class="st live">Shipping</span></button>
         <button class="rung" data-l="2" role="tab"><span class="lv">L2</span><span class="nm">Recommended</span><span class="st live">Shipping</span></button>
         <button class="rung" data-l="3" role="tab"><span class="lv">L3</span><span class="nm">Human-approved closed loop</span><span class="st live">Shipping</span></button>
-        <button class="rung" data-l="4" role="tab"><span class="lv">L4</span><span class="nm">Autonomous,<br>human on the loop</span><span class="st vis">Vision</span></button>
+        <button class="rung" data-l="4" role="tab"><span class="lv">L4</span><span class="nm">Autonomous,<br>human over the loop</span><span class="st vis">Vision</span></button>
       </div>
       <div class="ladder-detail">
         <div class="ld"><div class="k">🤖 AI does</div><p id="ld-ai"></p></div>
@@ -626,7 +639,7 @@ body.js .reveal.visible{opacity:1;transform:none}
       </div>
       <div class="col later reveal">
         <h3><span class="dot"></span>Later — Vision</h3>
-        <div class="card"><b>Autonomous network operations</b>AI agents handling detection → decision → action with humans on the loop, not in it.</div>
+        <div class="card"><b>Autonomous network operations</b>AI agents handling detection → decision → action with humans over the loop, not in it.</div>
         <div class="card"><b>AI-first operations at scale</b>The playbook from one team to an organization.</div>
       </div>
     </div>
