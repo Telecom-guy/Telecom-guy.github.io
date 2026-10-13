@@ -279,6 +279,8 @@ body.js .journey:not(.visible) .j-area,body.js .journey:not(.visible) .j-flow{op
 @media(max-width:560px){.bar{grid-template-columns:110px 1fr 40px}}
 
 /* education */
+.edu-group{font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;margin:0 0 12px}
+.edu+.edu-group{margin-top:32px}
 .edu{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 .edu-item{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow)}
 .edu-item .k{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700}
@@ -714,13 +716,17 @@ body.js .reveal.visible{opacity:1;transform:none}
       <div class="eyebrow">// CREDENTIALS</div>
       <h2>Education &amp; certifications</h2>
     </div>
+    <h3 class="edu-group">🎓 Education</h3>
     <div class="edu">
-      <div class="edu-item reveal"><div class="k">Education</div><b>M.S., Electrical Engineering</b><span>Lamar University, Beaumont, TX · 2007–2008</span></div>
-      <div class="edu-item reveal"><div class="k">Education</div><b>B.E., Electronics &amp; Communication Eng.</b><span>MITM, Indore, India · 2003–2007</span></div>
-      <div class="edu-item hl reveal"><div class="k">Certification</div><b>Project Management Professional (PMP)</b><span>PMI · 2021</span></div>
+      <div class="edu-item reveal"><div class="k">Bachelor's</div><b>B.E., Electronics &amp; Communication Eng.</b><span>MITM, Indore, India · 2003–2007</span></div>
+      <div class="edu-item reveal"><div class="k">Master's</div><b>M.S., Electrical Engineering</b><span>Lamar University, Beaumont, TX · 2007–2008</span></div>
+    </div>
+    <h3 class="edu-group">📜 Certifications &amp; continued learning</h3>
+    <div class="edu">
       <div class="edu-item reveal"><div class="k">Certification</div><b>SAFe 5 Practitioner</b><span>Scaled Agile · 2020</span></div>
-      <div class="edu-item reveal"><div class="k">Executive Education</div><b>Data Strategy</b><span>UC Berkeley</span></div>
-      <div class="edu-item hl reveal"><div class="k">Hands-on</div><b>AI / LLM Integration &amp; Claude Code</b><span>Anthropic</span></div>
+      <div class="edu-item hl reveal"><div class="k">Certification</div><b>Project Management Professional (PMP)</b><span>PMI · 2021</span></div>
+      <div class="edu-item reveal"><div class="k">Executive Education</div><b>Data Strategy</b><span>UC Berkeley · 2022</span></div>
+      <div class="edu-item hl reveal"><div class="k">Hands-on</div><b>AI / LLM Integration &amp; Claude Code</b><span>Anthropic · 2024–ongoing</span></div>
     </div>
   </div>
 </section>
