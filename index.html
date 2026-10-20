@@ -234,6 +234,9 @@ body.js .journey:not(.visible) .j-area,body.js .journey:not(.visible) .j-flow{op
 .ld{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
 .ld .k{font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700}
 .ld p{font-size:.9rem;margin-top:6px;color:var(--ink-2)}
+a.pov-link{display:block;color:inherit;transition:opacity .6s,transform .25s,box-shadow .25s,border-color .25s}
+body a.pov-link:hover,body.js a.pov-link.reveal.visible:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--accent)}
+.ladder-head .pov-link-go{color:var(--accent);font-weight:600}
 @media(max-width:760px){.ladder{grid-template-columns:1fr}.rung{min-height:0!important}.ladder-detail{grid-template-columns:1fr}}
 
 /* timeline */
@@ -592,6 +595,11 @@ body.js .reveal.visible{opacity:1;transform:none}
         <div class="ld"><div class="k">📡 RAN example</div><p id="ld-ex"></p></div>
       </div>
     </div>
+
+    <a class="ladder-wrap reveal pov-link" href="principles.html">
+      <div class="ladder-head"><h3>🧭 Designing for machine-led communication</h3><span class="pov-link-go">Read the principles →</span></div>
+      <p class="pov-sub">When machines talk to machines, every team needs a clear role. Four roles (Builder, Connector, Data Provider, Operator) and three delivery partners (Context, FDE, Infra &amp; Ops).</p>
+    </a>
 
   </div>
 </section>
